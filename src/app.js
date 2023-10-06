@@ -1,11 +1,29 @@
-function formatDate(timestamp) {
-  let date = new Date(timestamp);
-  let hours = timestamp.getHours();
-  let minutes = date.getMinutes();
-  let day = date.getDay();
-  return "${day} ${hours} ${minutes}";
-  dateElement.innerHTML = formatDate(response.data.dt * 1000);
+let now = new Date();
+function formatDate(date) {
+  let hours = now.getHours();
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  let minutes = now.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  let dayIndex = date.getDay();
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let day = days[dayIndex];
+  return `${day}, ${hours}:${minutes}`;
 }
+let currentDate = document.querySelector("#date");
+let dateElement = new Date();
+currentDate.innerHTML = formatDate(dateElement);
 
 function displayTemperature(response) {
   console.log(response);
