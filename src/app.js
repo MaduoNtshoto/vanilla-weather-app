@@ -46,9 +46,25 @@ function displayTemperature(response) {
   );
   iconElement.setAttribute("alt", response.data.weather[0].description);
 }
-let apiKey = "1518f0c619a9ace452061737d19b50db";
-let apiUrl =
-  "https://api.openweathermap.org/data/2.5/weather?q=Gaborone&appid=1518f0c619a9ace452061737d19b50db&units=metric";
 
-console.log(apiUrl);
-axios.get(apiUrl).then(displayTemperature);
+function search(city) {
+  let apiKey = "1518f0c619a9ace452061737d19b50db";
+  let apiUrl =
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
+    city +
+    "&appid=" +
+    apiKey +
+    "&units=metric";
+
+  axios.get(apiUrl).then(displayTemperature);
+}
+
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInputElement = document.querySelector("#city-input");
+  search(cityInputElement.value);
+}
+search("Gaborone");
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
