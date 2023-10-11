@@ -25,6 +25,33 @@ let currentDate = document.querySelector("#date");
 let dateElement = new Date();
 currentDate.innerHTML = formatDate(dateElement);
 
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+  let days = ["Thu", "Fri", "Sat", "sun"];
+
+  let focastHTML = `<div class="row">`;
+  days.forEach(function (day) {
+    focastHTML =
+      focastHTML +
+      `
+              <div class="col-2">
+                <div class="weather-forecast-date">${day}</div>
+                <img
+                  src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
+                  alt=""
+                  width="42"
+                />
+                <div class="weather-forecast-temperature">
+                  <span class="weather-forecast-temperature-max">32°</span>
+                  <span class="weather-forecast-temperature-min">18°</span>
+                </div>
+            </div>
+            `;
+  });
+  focastHTML = focastHTML + `</div>`;
+  forecastElement.innerHTML = focastHTML;
+}
+
 function displayTemperature(response) {
   console.log(response);
   let temperatureElement = document.querySelector("#temperature");
@@ -93,3 +120,4 @@ let celsiuslink = document.querySelector("#celsius-link");
 celsiuslink.addEventListener("click", displaycelsiusTemperature);
 
 search("Gaborone");
+displayForecast();
