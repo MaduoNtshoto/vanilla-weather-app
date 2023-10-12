@@ -25,14 +25,15 @@ let currentDate = document.querySelector("#date");
 let dateElement = new Date();
 currentDate.innerHTML = formatDate(dateElement);
 
-function displayForecast() {
+function displayForecast(response) {
+  console.log(response.data.daily);
   let forecastElement = document.querySelector("#forecast");
   let days = ["Thu", "Fri", "Sat", "sun"];
 
-  let focastHTML = `<div class="row">`;
+  let forecastHTML = `<div class="row">`;
   days.forEach(function (day) {
-    focastHTML =
-      focastHTML +
+    forecastHTML =
+      forecastHTML +
       `
               <div class="col-2">
                 <div class="weather-forecast-date">${day}</div>
@@ -48,10 +49,16 @@ function displayForecast() {
             </div>
             `;
   });
-  focastHTML = focastHTML + `</div>`;
-  forecastElement.innerHTML = focastHTML;
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
 }
 
+function getForecast(coordinates) {
+  console.log(coordinates);
+  let apiKey = "58a6775f97527351bf6c6966e209be39";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
 function displayTemperature(response) {
   console.log(response);
   let temperatureElement = document.querySelector("#temperature");
@@ -73,6 +80,8 @@ function displayTemperature(response) {
   );
   iconElement.setAttribute("alt", response.data.weather[0].description);
   celsiusTemperature = response.data.main.temp;
+
+  getForecast(response.data.coord);
 }
 
 function search(city) {
@@ -120,4 +129,3 @@ let celsiuslink = document.querySelector("#celsius-link");
 celsiuslink.addEventListener("click", displaycelsiusTemperature);
 
 search("Gaborone");
-displayForecast();
